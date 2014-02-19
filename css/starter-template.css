@@ -1,0 +1,44 @@
+body {
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
+.form-horizontal{
+	padding-left: 0;
+}
+
+#datepicker {
+	width: 300px;
+	position:inline;
+}
+
+#info {
+	position:inline;
+}
+
+.span4{
+	max-width:400px;
+	display:inline-block;
+	vertical-align: top;
+	margin: 0px auto;
+	margin-left: 100px;
+}
+
+#bord{
+	width: 800px;
+	margin: 0px auto;
+}
+
+.row-fuild{
+	background: #;
+	border-radius: 15px;
+}
+
+.span8{
+	width: 300px;
+	vertical-align: center;
+	margin: 0px auto;
+}
