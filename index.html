@@ -29,7 +29,13 @@
       <script src="js/jquery-ui-1.10.4.custom.js"></script>
     <script type="text/javascript">
       $(function() {
+
       $("#datepicker").datepicker();
+
+      $( "#slider" ).slider({
+      range: true,
+      values: [ 17, 67 ]
+    });
    });
       </script>
       <script src="js/main.js"></script>
@@ -73,6 +79,14 @@
                 </div>
               </div>
             </fieldset>
+
+            <div class="progress">
+              <div class="progress-bar progress-bar-success" style="width: 10%">
+                <span class="sr-only"></span>
+              </div>
+            </div>
+
+            <div id="slider"></div>
 
             <fieldset>
               <div class="control-group">
