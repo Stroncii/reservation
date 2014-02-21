@@ -33,10 +33,17 @@
       $("#datepicker").datepicker();
 
       $( "#slider" ).slider({
+        min: 8,
+        max: 18,
       range: true,
-      values: [ 17, 67 ]
+      values: [ 10, 16 ],
+      slide: function( event, ui ) {
+        $( "#amount" ).val( ui.values[ 0 ] + ":00 - " + ui.values[ 1 ] + ":00" );
+      }
     });
-   });
+    $( "#amount" ).val($( "#slider" ).slider( "values", 0 ) +
+      ":00 - " + $( "#slider" ).slider( "values", 1 ) + ":00" );
+    });
       </script>
       <script src="js/main.js"></script>
   </head>
@@ -72,21 +79,21 @@
 
             <fieldset>
               <div class="control-group">
-                <label class="control-label" for="input01">Начало</label>
+                <label class="control-label" for="input01">Время</label>
                 <div class="controls">
-                  <input type="text" class="input-xlarge" id="inputTime">
-                  <p class="help-block">Введите время начала.</p>
+                  <div class="progress">
+                    <div class="progress-bar progress-bar-success" style="width: 100%">
+                      <span class="sr-only"></span>
+                        </div>
+                      </div>
+                      <label for="amount">Выбранное время:</label>
+                      <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;">
+                      <div id="slider"></div>
+                  <p class="help-block">Выберите время.</p>
                 </div>
               </div>
             </fieldset>
 
-            <div class="progress">
-              <div class="progress-bar progress-bar-success" style="width: 10%">
-                <span class="sr-only"></span>
-              </div>
-            </div>
-
-            <div id="slider"></div>
 
             <fieldset>
               <div class="control-group">
