@@ -68,14 +68,29 @@
         <div id="bord">
         <div id="datepicker" class="span4"> </div>
         <div class="span4" id="info">
+
           <form class="form-horizontal pull-middle">
             <fieldset>
-                <label class="control-label" for="input01">Имя</label>
+              <form class="form-inline">
+                <form class="form-horizontal pull-middle">
+                 <label class="control-label" for="input01">Имя</label>
+                  <div class="controls">
+                    <input type="text" class="input-xlarge" id="username">
+                    <p class="help-block">Введите Ваше имя.</p>
+                  </div>
+                </form>
+                <form class="form-horizontal">
+                <label class="control-label" for="input01">Пароль</label>
                 <div class="controls">
-                  <input type="text" class="input-xlarge" id="inputName">
-                  <p class="help-block">Введите Ваше имя.</p>
-              </div>
+                  <input type="password" class="input-xlarge" id="password">
+                  <p class="help-block">Введите Ваш пароль.</p>
+                </div>
+                </form>
+                <button type="submit" class="btn" id="logButton">Войти</button>
+          </form>
             </fieldset>
+
+
 
             <fieldset>
               <div class="control-group">
@@ -87,7 +102,7 @@
                         </div>
                       </div>
                       <label for="amount">Выбранное время:</label>
-                      <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;">
+                      <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;" disabled="disabled">
                       <div id="slider"></div>
                   <p class="help-block">Выберите время.</p>
                 </div>
@@ -95,15 +110,7 @@
             </fieldset>
 
 
-            <fieldset>
-              <div class="control-group">
-                <label class="control-label" for="input01">Длительность</label>
-                <div class="controls">
-                  <input type="text" class="input-xlarge" id="inputHours">
-                  <p class="help-block">Введите длительность бронировки.</p>
-                </div>
-              </div>
-            </fieldset>
+
           </form>
           </div>
           </div>
@@ -136,7 +143,7 @@
                           </div>
                         </fieldset>
                    </div>
-                   <button type="submit" class="btn">Забронировать</button>
+                   <button type="submit" class="btn" id="button">Забронировать</button>
                 </div>
               </div>
             </div>

@@ -42,3 +42,7 @@ body {
 	vertical-align: center;
 	margin: 0px auto;
 }
+
+.form-inline {
+	vertical-align: center;
+}
