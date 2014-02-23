@@ -75,18 +75,18 @@
                 <form class="form-horizontal pull-middle">
                  <label class="control-label" for="input01">Имя</label>
                   <div class="controls">
-                    <input type="text" class="input-xlarge" id="username">
+                    <input onsubmit="return false;" type="text" class="input-xlarge" id="username">
                     <p class="help-block">Введите Ваше имя.</p>
                   </div>
                 </form>
                 <form class="form-horizontal">
                 <label class="control-label" for="input01">Пароль</label>
                 <div class="controls">
-                  <input type="password" class="input-xlarge" id="password">
+                  <input type="password" onsubmit="return false;" class="input-xlarge" id="password">
                   <p class="help-block">Введите Ваш пароль.</p>
                 </div>
                 </form>
-                <button type="submit" class="btn" id="logButton">Войти</button>
+                <button type="button" class="btn" id="logButton">Войти</button>
           </form>
             </fieldset>
 
@@ -128,7 +128,7 @@
                         <fieldset>
                             <label class="control-label" for="input01">Период</label>
                             <div class="controls">
-                              <input type="text" class="input-xlarge" id="inputName">
+                              <input onsubmit="return false;"  type="text" class="input-xlarge" id="inputName">
                               <p class="help-block">Введите период бронировки.</p>
                           </div>
                         </fieldset>
@@ -137,13 +137,13 @@
                           <div class="control-group">
                             <label class="control-label" for="input01">Количество</label>
                             <div class="controls">
-                              <input type="text" class="input-xlarge" id="inputTime">
+                              <input onsubmit="return false;"  type="text" class="input-xlarge" id="inputTime">
                               <p class="help-block">Введите количество бронировок.</p>
                             </div>
                           </div>
                         </fieldset>
                    </div>
-                   <button type="submit" class="btn" id="button">Забронировать</button>
+                   <button type="button" onsubmit="return false;" type="submit" class="btn" id="button">Забронировать</button>
                 </div>
               </div>
             </div>
