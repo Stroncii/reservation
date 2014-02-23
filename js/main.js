@@ -40,18 +40,22 @@ $(document).ready(function(){
        	 var date;
        	 $(document).on('change','#datepicker',function(){
        	 	date = $(datepicker).datepicker({ dateFormat: 'dd-mm-yy' }).val();
+          updatetable();
        	 	console.log(date);
        	 });
 
          $('#button').click(function() {
-          if (1){
+          if (Client){
             console.log("Дата: " + $(datepicker).datepicker({ dateFormat: 'dd-mm-yy' }).val());
             console.log("Время: " + $( "#slider" ).slider( "values", 0 ));
             console.log("Конец: " + $( "#slider" ).slider( "values", 1 ));
             console.log("Клиент: " + Client.name);
             Book = new reservation ($(datepicker).datepicker({ dateFormat: 'dd-mm-yy' }).val(),$( "#slider" ).slider( "values", 0 ),$( "#slider" ).slider( "values", 1 ), Client.name);
-           reservations.push(Book);
+            reservations.push(Book);
             alert ("Вы " + reservations[reservations.length-1].name + " забронировали зал " + reservations[reservations.length-1].date + " c " + reservations[reservations.length-1].start + ":00 по " + reservations[reservations.length-1].end + ":00" );
+            updatetable();
+          } else {
+            alert ("Пожалуйста авторизуйтесь");
           }
           
         });
@@ -67,4 +71,14 @@ $(document).ready(function(){
           };
 
         });
+
+         function updatetable(){
+          $(".table > tbody > tr").remove();
+          var i=0;
+          for (i; i<reservations.length; i++){
+            if($(datepicker).datepicker({ dateFormat: 'dd-mm-yy' }).val() == reservations[i].date){
+            $(".table > tbody").append('<tr class="warning"><td>'+i+'</td><td>'+reservations[i].start+'</td><td>'+reservations[i].end+'</td><td>Button</td></tr>' );
+          }
+         }
+       }
 });
