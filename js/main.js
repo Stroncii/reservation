@@ -1,6 +1,10 @@
     var Client;
     var Book;
     var clients = new Array();
+    var progressBar = {};
+    var currentDate;
+
+
     function username(name, password) { 
       this.name = name;
       this.password = password;
@@ -13,14 +17,26 @@
       this.end = end;
       this.name = clientname;
     }
-     var reservations = new Array ();
+    var reservations = new Array ();
+
+    var progressBar = {};
+    function updatePB (date, start, end) {
+      if (!progressBar[date]){
+        var a;
+        progressBar[date] = a;
+      } 
+      progressBar[date].a.push((start-8)*10);
+      progressBar[date].a.push((end-start)*10);
+      alert(progressBar[date].a[0] + "  " + progressBar[date].a[1]);
+    }
 
 $(document).ready(function(){
 
 		$('#repeatin').hide();
 		$('#table').hide();
-		var dateObject = $("#datepicker").datepicker("getDate");
-		var dateString = $.datepicker.formatDate("dd-mm-yy", dateObject);
+    currentDate = new Date($("#datepicker").datepicker("getDate"));
+		
+	//	var dateString = $.datepicker.formatDate("dd-mm-yy", dateObject);
     
 
     
@@ -39,21 +55,37 @@ $(document).ready(function(){
 
        	 var date;
        	 $(document).on('change','#datepicker',function(){
-       	 	date = $(datepicker).datepicker({ dateFormat: 'dd-mm-yy' }).val();
+       	// 	date = $(datepicker).datepicker().val();
+          currentDate = new Date($("#datepicker").datepicker("getDate"));
+          console.log (currentDate);
+        //  currentDate.setDate(currentDate.getDate() + 2);
+          
           updatetable();
-       	 	console.log(date);
+
        	 });
 
          $('#button').click(function() {
+         
           if (Client){
-            console.log("Дата: " + $(datepicker).datepicker({ dateFormat: 'dd-mm-yy' }).val());
-            console.log("Время: " + $( "#slider" ).slider( "values", 0 ));
-            console.log("Конец: " + $( "#slider" ).slider( "values", 1 ));
-            console.log("Клиент: " + Client.name);
-            Book = new reservation ($(datepicker).datepicker({ dateFormat: 'dd-mm-yy' }).val(),$( "#slider" ).slider( "values", 0 ),$( "#slider" ).slider( "values", 1 ), Client.name);
-            reservations.push(Book);
-            alert ("Вы " + reservations[reservations.length-1].name + " забронировали зал " + reservations[reservations.length-1].date + " c " + reservations[reservations.length-1].start + ":00 по " + reservations[reservations.length-1].end + ":00" );
+            var flag = false;
+            var i = 0;
+            Book = new reservation ( $("#datepicker").datepicker("getDate"), $( "#slider" ).slider( "values", 0 ),$( "#slider" ).slider( "values", 1 ), Client.name);
+            for (i; i < reservations.length; i++){
+              console.log(" reservations[i].date " + reservations[i].date + " Book.date " + Book.date);
+              console.log(" reservations[i].start " + reservations[i].start + " Book.start " + Book.start);
+              console.log(" reservations[i].end " + reservations[i].end + " Book.end " + Book.end);
+              if ((reservations[i].date == Book.date) && ((reservations[i].start >= Book.start && reservations[i].start < Book.end) || (reservations[i].end > Book.start && reservations[i].end <= Book.end) || (reservations[i].start >= Book.start && reservations[i].end <= Book.end)))
+                flag = true;
+                break;
+            }  
+            if (!flag) {        
+              reservations.push(Book);
+              alert ("Вы " + reservations[reservations.length-1].name + " забронировали зал " + reservations[reservations.length-1].date + " c " + reservations[reservations.length-1].start + ":00 по " + reservations[reservations.length-1].end + ":00" );
+         //   updatePB (Book.date, Book.start, Book.end);
             updatetable();
+          } else {
+            alert ("К сожалению вы не можете заказать зал на это время");
+          }
           } else {
             alert ("Пожалуйста авторизуйтесь");
           }
@@ -75,9 +107,16 @@ $(document).ready(function(){
          function updatetable(){
           $(".table > tbody > tr").remove();
           var i=0;
+          console.log(reservations.length);
           for (i; i<reservations.length; i++){
-            if($(datepicker).datepicker({ dateFormat: 'dd-mm-yy' }).val() == reservations[i].date){
-            $(".table > tbody").append('<tr class="warning"><td>'+i+'</td><td>'+reservations[i].start+'</td><td>'+reservations[i].end+'</td><td>Button</td></tr>' );
+       //     console.log ("мы до ветвления шаг" + i);
+        //    console.log ( currentDate == reservations[i].date);
+            console.log ("нынешняя дата " + $("#datepicker").datepicker("getDate") + "        дата существующей резервации " +  reservations[i].date );
+            if( $("#datepicker").datepicker("getDate") === reservations[i].date ){
+              $(".table > tbody").append('<tr class="warning"><td>'+i+'</td><td>'+reservations[i].start+'</td><td>'+reservations[i].end+'</td><td>Button</td></tr>' );
+              console.log ("тут должна была вывестись таблица");
+          } else {
+            console.log ("мы в ветвлении цикла");
           }
          }
        }
