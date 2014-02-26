@@ -18,17 +18,7 @@
       this.name = clientname;
     }
     var reservations = new Array ();
-
-    var progressBar = {};
-    function updatePB (date, start, end) {
-      if (!progressBar[date]){
-        var a;
-        progressBar[date] = a;
-      } 
-      progressBar[date].a.push((start-8)*10);
-      progressBar[date].a.push((end-start)*10);
-      alert(progressBar[date].a[0] + "  " + progressBar[date].a[1]);
-    }
+    
 
 $(document).ready(function(){
 
@@ -37,7 +27,7 @@ $(document).ready(function(){
     currentDate = new Date($("#datepicker").datepicker("getDate"));
 		
 	//	var dateString = $.datepicker.formatDate("dd-mm-yy", dateObject);
-    
+    $(".progress").append('<div class="progress-bar progress-bar-success" style="width: 100%"><span class="sr-only"></span></div>');
 
     
 
@@ -61,6 +51,7 @@ $(document).ready(function(){
         //  currentDate.setDate(currentDate.getDate() + 2);
           
           updatetable();
+          updatePB (new Date(currentDate));
 
        	 });
 
@@ -112,6 +103,7 @@ $(document).ready(function(){
               alert ("Пожалуйста авторизуйтесь");
               }
           updatetable();
+          updatePB ($("#datepicker").datepicker("getDate"));
         });
 
          $('#logButton').click(function() {
@@ -142,4 +134,32 @@ $(document).ready(function(){
           }
          }
        }
+
+      function updatePB (date) {
+        var i;
+        $('.progress-bar').remove();
+        var percents = new Array();
+        for (i=0; i<reservations.length; i++){
+          if (reservations[i].date - date == 0 ){
+            percents.push((reservations[i].start-8)*10);  // beginin'
+            percents.push((reservations[i].end - 8)*10); // width
+          }
+        }
+        percents.sort(function(a,b){return a - b});
+        console.log(percents);
+        if (percents.length) {
+            $('.progress').append ('<div class="progress-bar progress-bar-success" style="width:' + percents[0] + '%"><span class="sr-only"></span></div>');
+            console.log("  Нарисовали первую зелёную область ");
+            for (i=0; i<percents.length; i+=2){
+              $('.progress').append ('<div class="progress-bar progress-bar-danger" style="width:' + (percents[i+1]-percents[i]) + '%"><span class="sr-only"></span></div>');
+              console.log("  Нарисовали красную область ");
+
+              if (percents[i+2]) {
+                console.log ("i+2 существует - рисуем следующую зелёнку");
+                $('.progress').append ('<div class="progress-bar progress-bar-success" style="width:' + (percents[i+2]-percents[i+1]) + '%"><span class="sr-only"></span></div>');
+                } 
+            }      
+            $('.progress').append ('<div class="progress-bar progress-bar-success" style="width:' + (100-percents[percents.length-1]) + '%"><span class="sr-only"></span></div>');     
+        } else $('.progress').append ('<div class="progress-bar progress-bar-success" style="width:100%"><span class="sr-only"></span></div>');
+      }
 });
