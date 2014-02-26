@@ -107,11 +107,23 @@ $(document).ready(function(){
         });
 
          $('#logButton').click(function() {
+          var i;
+          var clientFlag = true;
           if ($('#username').val() && $('#password').val()){
             Client = new username($('#username').val(), $('#password').val());
-            clients.push(Client);
-            alert ('Здравствуйте ' + clients[clients.length-1].name);
-            $('#table').show();
+            for (i=0; i< clients.length; i++){
+              if (clients[i].name = Client.name && clients[i].password != Client.password){
+                clientFlag = false;
+                alert ("  Введите правильный логин и пароль.");
+                Client = null;
+                break;
+              }
+            }
+            if (clientFlag){
+              clients.push(Client);
+              alert ('Здравствуйте ' + clients[clients.length-1].name);
+              $('#table').show();
+            }
           } else {
             alert ('Введите логин и пароль');
           };
