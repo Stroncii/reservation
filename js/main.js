@@ -3,15 +3,17 @@
     var clients = new Array();
     var progressBar = {};
     var currentDate;
+
     function deleteTag (index) {
 
-      if (Client.name = reservations[index].name) {
+      if ( Client.name == reservations[index].name) {
+        alert ('ИМЯ ВАШЕ!');
         reservations.splice(index, 1);
         console.log(reservations.length);
         updatetable(); // updating table
         updatePB ($("#datepicker").datepicker("getDate"));
       } else {
-        alert ("У вас нет прав для уаления данной резервации");
+        alert ("У вас нет прав для удаления данной резервации");
       }
     }
 
