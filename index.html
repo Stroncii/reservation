@@ -41,7 +41,7 @@
         $( "#amount" ).val( ui.values[ 0 ] + ":00 - " + ui.values[ 1 ] + ":00" );
       }
     });
-    $( "#amount" ).val($( "#slider" ).slider( "values", 0 ) +
+    $( "#amount" ).val( $( "#slider" ).slider( "values", 0 ) +
       ":00 - " + $( "#slider" ).slider( "values", 1 ) + ":00" );
 
     $( "#sliderday" ).slider({
@@ -52,7 +52,7 @@
         $( "#amount1" ).val( ui.values[ 0 ] );
       }
     });
-    $( "#amountday" ).val($( "#slider1" ).slider( "values", 0 ) + " день ");
+    $( "#amount1" ).val($( "#sliderday" ).slider( "values", 0 ));
 
     $( "#slidercount" ).slider({
         min: 1,
@@ -62,7 +62,7 @@
         $( "#amount2" ).val( ui.values[ 0 ] );
       }
     });
-    $( "#amountcount" ).val($( "#slider2" ).slider( "values", 0 ));
+    $( "#amount2" ).val($( "#slidercount" ).slider( "values", 0 ));
     });
       </script>
       <script src="js/main.js"></script>

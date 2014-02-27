@@ -4,11 +4,15 @@
     var progressBar = {};
     var currentDate;
     function deleteTag (index) {
-      alert ("Удалим запись " + index, reservations.length);
-      reservations.splice(index, 1);
-      console.log(reservations.length);
-      updatetable(); // updating table
-      updatePB ($("#datepicker").datepicker("getDate"));
+
+      if (Client.name = reservations[index].name) {
+        reservations.splice(index, 1);
+        console.log(reservations.length);
+        updatetable(); // updating table
+        updatePB ($("#datepicker").datepicker("getDate"));
+      } else {
+        alert ("У вас нет прав для уаления данной резервации");
+      }
     }
 
 
