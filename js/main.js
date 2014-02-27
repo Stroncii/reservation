@@ -3,6 +3,13 @@
     var clients = new Array();
     var progressBar = {};
     var currentDate;
+    function deleteTag (index) {
+      alert ("Удалим запись " + index, reservations.length);
+      reservations.splice(index, 1);
+      console.log(reservations.length);
+      updatetable(); // updating table
+      updatePB ($("#datepicker").datepicker("getDate"));
+    }
 
 
     function username(name, password) { 
@@ -18,6 +25,19 @@
       this.name = clientname;
     }
     var reservations = new Array ();
+
+     function updatetable(){
+          $(".table > tbody > tr").remove();
+          var t=0;
+          console.log(reservations.length);
+          for (t; t<reservations.length; t++){
+            console.log ("нынешняя дата " + $("#datepicker").datepicker("getDate") + "        дата существующей резервации " +  reservations[t].date );
+            if( $("#datepicker").datepicker("getDate") - reservations[t].date == 0 ){
+              $(".table > tbody").append('<tr class="warning"><td>'+t+'</td><td>'+reservations[t].start+'</td><td>'+reservations[t].end+'</td><td><button type="button" class="btn btn-small btn-primary" onclick="deleteTag(' + t + ')">Удалить</button></td></tr>' );
+            } else {
+            }
+          }
+      }
     
 
 $(document).ready(function(){
@@ -26,11 +46,7 @@ $(document).ready(function(){
 		$('#table').hide();
     currentDate = new Date($("#datepicker").datepicker("getDate"));
 		
-	//	var dateString = $.datepicker.formatDate("dd-mm-yy", dateObject);
     $(".progress").append('<div class="progress-bar progress-bar-success" style="width: 100%"><span class="sr-only"></span></div>');
-
-    
-
 
 
 
@@ -128,26 +144,10 @@ $(document).ready(function(){
             alert ('Введите логин и пароль');
           };
 
-        });
+        }); 
+});
 
-         function updatetable(){
-          $(".table > tbody > tr").remove();
-          var t=0;
-          console.log(reservations.length);
-          for (t; t<reservations.length; t++){
-       //     console.log ("мы до ветвления шаг" + i);
-        //    console.log ( currentDate == reservations[i].date);
-            console.log ("нынешняя дата " + $("#datepicker").datepicker("getDate") + "        дата существующей резервации " +  reservations[t].date );
-            if( $("#datepicker").datepicker("getDate") - reservations[t].date == 0 ){
-              $(".table > tbody").append('<tr class="warning"><td>'+t+'</td><td>'+reservations[t].start+'</td><td>'+reservations[t].end+'</td><td>Button</td></tr>' );
-      //        console.log ("тут должна была вывестись таблица");
-          } else {
-       //     console.log ("мы в ветвлении цикла");
-          }
-         }
-       }
-
-      function updatePB (date) {
+    function updatePB (date) {
         var i;
         $('.progress-bar').remove();
         var percents = new Array();
@@ -174,4 +174,3 @@ $(document).ready(function(){
             $('.progress').append ('<div class="progress-bar progress-bar-success" style="width:' + (100-percents[percents.length-1]) + '%"><span class="sr-only"></span></div>');     
         } else $('.progress').append ('<div class="progress-bar progress-bar-success" style="width:100%"><span class="sr-only"></span></div>');
       }
-});

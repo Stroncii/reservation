@@ -19,6 +19,11 @@ body {
 	position:inline;
 }
 
+.btn-small {
+	height: 25px;
+	padding: 3px;
+}
+
 .span4{
 	max-width:400px;
 	display:inline-block;
