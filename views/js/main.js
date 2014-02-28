@@ -7,7 +7,6 @@
     function deleteTag (index) {
 
       if ( Client.name == reservations[index].name) {
-        alert ('ИМЯ ВАШЕ!');
         reservations.splice(index, 1);
         console.log(reservations.length);
         updatetable(); // updating table
