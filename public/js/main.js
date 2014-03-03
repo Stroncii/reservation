@@ -78,7 +78,14 @@ $(document).ready(function(){
 
          $('#button').click(function() {
          
-          if (Client){
+          $.ajax({
+            url:"/",
+            method: 'POST',
+            success: function (){
+              console.log("успех");
+            }
+          });
+        /*  if (Client){
             var j = 0, quantity, days;
             var flag = false;
             var i;
@@ -124,7 +131,7 @@ $(document).ready(function(){
               alert ("Пожалуйста авторизуйтесь");
               }
           updatetable();
-          updatePB ($("#datepicker").datepicker("getDate"));
+          updatePB ($("#datepicker").datepicker("getDate"));*/
         });
 
          $('#logButton').click(function() {

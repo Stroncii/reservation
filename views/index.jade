@@ -1,5 +1,98 @@
-extends layout
-
-block content
-  h1= title
-  p Welcome to #{title}
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    link(rel='shortcut icon', href='../../assets/ico/favicon.ico')
+    title Starter Template for Bootstrap
+    // Bootstrap core CSS
+    link(href='/css/bootstrap.min.css', rel='stylesheet')
+    // Custom styles for this template
+    link(href='/css/starter-template.css', rel='stylesheet')
+    // Just for debugging purposes. Don't actually copy this line!
+    //if lt IE 9
+      script(src='../../assets/js/ie8-responsive-file-warning.js')
+    // HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries
+    //if lt IE 9
+      script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+      script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+    link(href='/css/ui-lightness/jquery-ui-1.10.4.custom.css', rel='stylesheet')
+    script(src='/js/jquery-1.10.2.js')
+    script(src='/js/jquery-ui-1.10.4.custom.js')
+    script(src='/js/pickers.js')
+      
+    script(src='/js/main.js')
+  body
+    .navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+      .container
+        a.navbar-brand(href='#') Conference hall
+    .container
+      .starter-template
+        h1 &Bcy;&rcy;&ocy;&ncy;&icy;&rcy;&ocy;&vcy;&acy;&ncy;&icy;&iecy; &kcy;&ocy;&ncy;&fcy;&iecy;&rcy;&iecy;&ncy;&tscy;-&zcy;&acy;&lcy;&acy;
+        legend &Vcy;&ycy;&bcy;&iecy;&rcy;&icy;&tcy;&iecy; &dcy;&acy;&tcy;&ucy; &icy; &zcy;&acy;&pcy;&ocy;&lcy;&ncy;&icy;&tcy;&iecy; &icy;&ncy;&fcy;&ocy;&rcy;&mcy;&acy;&tscy;&icy;&yucy;
+      .row-fluid
+        #bord
+          #datepicker.span4  
+          #info.span4
+            form.form-horizontal.pull-middle
+              fieldset
+                form.form-inline
+                  form.form-horizontal.pull-middle
+                    label.control-label(for='input01') &Icy;&mcy;&yacy;
+                    .controls
+                      input#username.input-xlarge(type='text', onsubmit='return false;')
+                      p.help-block &Vcy;&vcy;&iecy;&dcy;&icy;&tcy;&iecy; &Vcy;&acy;&shcy;&iecy; &icy;&mcy;&yacy;&period;
+                  form.form-horizontal
+                    label.control-label(for='input01') &Pcy;&acy;&rcy;&ocy;&lcy;&softcy;
+                    .controls
+                      input#password.input-xlarge(type='password', onsubmit='return false;')
+                      p.help-block &Vcy;&vcy;&iecy;&dcy;&icy;&tcy;&iecy; &Vcy;&acy;&shcy; &pcy;&acy;&rcy;&ocy;&lcy;&softcy;&period;
+                  button#logButton.btn(type='button') &Vcy;&ocy;&jcy;&tcy;&icy;
+              fieldset
+                .control-group
+                  label.control-label(for='input01') &Vcy;&rcy;&iecy;&mcy;&yacy;
+                  .controls
+                    .progress
+                    label(for='amount') &Vcy;&ycy;&bcy;&rcy;&acy;&ncy;&ncy;&ocy;&iecy; &vcy;&rcy;&iecy;&mcy;&yacy;&colon;
+                    input#amount(type='text', style='border:0; color:#f6931f; font-weight:bold;', disabled='disabled')
+                    #slider
+                    p.help-block &Vcy;&ycy;&bcy;&iecy;&rcy;&icy;&tcy;&iecy; &vcy;&rcy;&iecy;&mcy;&yacy;&period;
+      .span8
+        .control-group.pull-center
+          .controls
+            label.checkbox
+              input#checkBox(type='checkbox')
+              | &Mcy;&ncy;&ocy;&gcy;&ocy;&kcy;&rcy;&acy;&tcy;&ncy;&ocy;&iecy; &bcy;&rcy;&ocy;&ncy;&icy;&rcy;&ocy;&vcy;&acy;&ncy;&icy;&iecy;&quest;
+            #repeatin
+              form.form-horizontal
+                fieldset
+                  label.control-label(for='input01') &Pcy;&iecy;&rcy;&icy;&ocy;&dcy; &vcy; &dcy;&ncy;&yacy;&khcy;
+                  .controls
+                    input#amount1(type='text', style='border:0; color:#f6931f; font-weight:bold;', disabled='disabled')
+                    #sliderday
+                    p.help-block &Vcy;&vcy;&iecy;&dcy;&icy;&tcy;&iecy; &pcy;&iecy;&rcy;&icy;&ocy;&dcy; &bcy;&rcy;&ocy;&ncy;&icy;&rcy;&ocy;&vcy;&kcy;&icy;&period;
+                fieldset
+                  .control-group
+                    label.control-label(for='input01') &Kcy;&ocy;&lcy;&icy;&chcy;&iecy;&scy;&tcy;&vcy;&ocy; &pcy;&ocy;&vcy;&tcy;&ocy;&rcy;&ocy;&vcy;
+                    .controls
+                      input#amount2(type='text', style='border:0; color:#f6931f; font-weight:bold;', disabled='disabled')
+                      #slidercount
+                      p.help-block &Vcy;&vcy;&iecy;&dcy;&icy;&tcy;&iecy; &kcy;&ocy;&lcy;&icy;&chcy;&iecy;&scy;&tcy;&vcy;&ocy; &bcy;&rcy;&ocy;&ncy;&icy;&rcy;&ocy;&vcy;&ocy;&kcy;&period;
+            button#button.btn(type='button', onsubmit='return false;') &Zcy;&acy;&bcy;&rcy;&ocy;&ncy;&icy;&rcy;&ocy;&vcy;&acy;&tcy;&softcy;
+      #table.starter-template
+        legend &Tcy;&acy;&bcy;&lcy;&icy;&tscy;&acy; &bcy;&rcy;&ocy;&ncy;&icy;&rcy;&ocy;&vcy;&acy;&ncy;&icy;&yacy;
+        table#tt.table
+          thead
+            tr.success
+              td &num;
+              td Start
+              td End
+              td Button
+          tbody
+    // /.container
+    //
+    // Placed at the end of the document so the pages load faster
+    script(src='/js/bootstrap.min.js')

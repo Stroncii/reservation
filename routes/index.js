@@ -4,5 +4,9 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Express' });
+	res.render('index', { Title: 'ejs' });
+};
+
+exports.post = function(req, res) {
+    console.log('123r');
 };
