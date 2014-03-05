@@ -85,6 +85,15 @@ app.get('/check', function(req, res){
 
 
 //function for delete 
-
+app.get('/delete', function(req, res){
+	console.log ("запрос на удаление записи: " + req.query.index);
+	var deleteFlag = false;
+	if (req.query.name == reservations[+req.query.index].name){
+		reservations.splice(+req.query.index, 1);
+        console.log(reservations.length);
+        deleteFlag = true;        
+	}
+	res.send({ deleteFlag: deleteFlag, reservations: reservations});
+});
 
 app.listen(3000);

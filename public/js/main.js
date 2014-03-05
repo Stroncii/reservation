@@ -4,15 +4,22 @@
     var currentDate;
 
     function deleteTag (index) {
-      if ( Client.name == reservations[index].name) {
-        reservations.splice(index, 1);
-        console.log(reservations.length);
-        updatetable(); // updating table
-        updatePB ($("#datepicker").datepicker("getDate"));
-      } else {
-        alert ("У вас нет прав для удаления данной резервации");
-      }
-    }
+      $.ajax({
+        url:"/delete",
+        data: { index: index, name: Client.name },
+        method: 'GET',
+        success: function (data){
+          if (data.deleteFlag){
+            reservations = data.reservations;
+            console.log("успех в удалении");
+            updatetable(); // updating table
+            updatePB ($("#datepicker").datepicker("getDate"));
+          } else {
+            alert ("У вас нет прав для удаления данной резервации");
+          }
+      }    
+      });
+    };
 
 
     function username(name, password) { 
@@ -141,6 +148,7 @@ $(document).ready(function(){
                     } else {
                       alert ("Здравствуйте, " + Client.name); 
                       console.log (Client);
+                      $('#table').show();
                     }
                  }
               });
