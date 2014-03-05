@@ -45,7 +45,7 @@ app.get('/booking', function(req, res){
   for (i; i < reservations.length; i++){
   	console.log( "Разница дат на шаге номер " + i + " " + (new Date(reservations[i].date) - date ));
   // make new request                
- 	if ( ( new Date(reservations[i].date) - date == 0 ) && ((reservations[i].start >= req.query.book.start && reservations[i].start < req.query.book.end) || (reservations[i].end > req.query.book.start && reservations[i].end <= req.query.book.end) || (reservations[i].start >= req.query.book.start && reservations[i].end <= req.query.book.end)))
+ 	if (( new Date(reservations[i].date) - date == 0 ) && ((+reservations[i].start >= +req.query.book.start && +reservations[i].start < +req.query.book.end) || (+reservations[i].end > +req.query.book.start && +reservations[i].end <= +req.query.book.end) || (+reservations[i].start >= +req.query.book.start && +reservations[i].end <= +req.query.book.end)))
  	{
    		 flag = true;
     	 break;
@@ -54,6 +54,7 @@ app.get('/booking', function(req, res){
   console.log ("Флаг на сервере равен " + flag);
   if (!flag) {        
      reservations.push(req.query.book); 
+     console.log("Количество элементов после проверки " + reservations.length);
    }
   res.send({ flag: flag, reservations: reservations });  
   res.end();

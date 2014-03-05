@@ -106,21 +106,22 @@ $(document).ready(function(){
                   method: 'GET',
                   success: function (data){
                       console.log("успех " + data.flag + " "  );
-                      if (!data.flag){
+                      if (!data.flag) {
                         reservations = data.reservations;
+                        updatetable();
+                        updatePB ($("#datepicker").datepicker("getDate"));
                        } else {
                         alert ('Вы не можете забронировать это время');
                        }
-                      updatetable();
-                      updatePB ($("#datepicker").datepicker("getDate"));
                  }
                 });   
-
-         //     currentDate.setDate(currentDate.getDate() + days);
-          //    console.log ( "Текущая дата в конце цикла" + currentDate);
-              }
-              } else {
-              alert ("Пожалуйста авторизуйтесь");
+            currentDate.setDate(currentDate.getDate() + days);
+            console.log ( "Текущая дата в конце цикла" + currentDate);
+            }
+            
+            
+            } else {
+                alert ("Пожалуйста авторизуйтесь");
               }
         });
 
@@ -154,8 +155,8 @@ $(document).ready(function(){
         $('.progress-bar').remove();
         var percents = new Array();
         for (i=0; i<reservations.length; i++){
-          if (new Date(reservations[i].date) - date == 0 ){
-            percents.push((reservations[i].start-8)*10);  // beginin'
+          if (new Date(reservations[i].date) - new Date(date) == 0 ){
+            percents.push((reservations[i].start - 8)*10);  // beginin'
             percents.push((reservations[i].end - 8)*10); // width
           }
         }
