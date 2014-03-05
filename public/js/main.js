@@ -1,11 +1,9 @@
     var Client;
     var Book;
-    var clients = new Array();
     var progressBar = {};
     var currentDate;
 
     function deleteTag (index) {
-
       if ( Client.name == reservations[index].name) {
         reservations.splice(index, 1);
         console.log(reservations.length);
@@ -77,7 +75,8 @@ $(document).ready(function(){
        	 });
 
          $('#button').click(function() {
-         
+         // Create new reservation
+          console.log (" А кто у нас хочет бронировать? " + Client);
           if (Client){
             var j = 0, quantity, days;
             var flag = false;
@@ -92,7 +91,7 @@ $(document).ready(function(){
               days = 0;
             }
 
-
+            // Many times reserving
             for (j; j < quantity; j++) {
               console.log ( "Текущая дата в начале цикла " + currentDate);
               console.log("шаг цикла номер: " + j);
@@ -125,27 +124,30 @@ $(document).ready(function(){
               }
         });
 
+         // Log in function
          $('#logButton').click(function() {
-          var i;
-          var clientFlag = true;
-          if ($('#username').val() && $('#password').val()){
-            Client = new username($('#username').val(), $('#password').val());
-            for (i=0; i< clients.length; i++){
-              if (clients[i].name = Client.name && clients[i].password != Client.password){
-                clientFlag = false;
-                alert ("  Введите правильный логин и пароль.");
-                Client = null;
-                break;
-              }
-            }
-            if (clientFlag){
-              clients.push(Client);
-              alert ('Здравствуйте ' + clients[clients.length-1].name);
-              $('#table').show();
-            }
+          if ($('#username').val() && $('#password').val()) {
+            Client = new username( $('#username').val(), $('#password').val() );
+            console.log(Client);
+              $.ajax({
+                url:'/check',
+                data: { client: Client },
+                method: 'GET',
+                success: function (data){
+                  console.log("успех " + data.flag + " "  );
+                  if (!data.flag) {
+                    alert ("Введите правильный логин и пароль.");
+                    Client = null;
+                    } else {
+                      alert ("Здравствуйте, " + Client.name); 
+                      console.log (Client);
+                    }
+                 }
+              });
           } else {
             alert ('Введите логин и пароль');
           };
+       
 
         }); 
 });

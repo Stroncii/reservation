@@ -8,9 +8,10 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
-var reservations = new Array ();;
+var reservations = new Array ();
+var clients = new Array();
 
-var clients = "./clients.json";
+var clientsFile = "./clients.json";
 var reservationsFile = "./reservations.json";
 
 
@@ -33,6 +34,7 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+
 // function for booking
 app.get('/booking', function(req, res){
 	// new booking 
@@ -52,6 +54,7 @@ app.get('/booking', function(req, res){
  	}  
   }
   console.log ("Флаг на сервере равен " + flag);
+  // if everythin' is good we new reservation will be created
   if (!flag) {        
      reservations.push(req.query.book); 
      console.log("Количество элементов после проверки " + reservations.length);
@@ -60,9 +63,25 @@ app.get('/booking', function(req, res){
   res.end();
 });
 
-
-
 //function for check Clients
+app.get('/check', function(req, res){
+	console.log ("мы тут");
+	res.header('Content-Length');
+	var i;
+	var clientFlag = true;
+    for (i=0; i< clients.length; i++) {
+        if (clients[i].name == req.query.client.name && clients[i].password != req.query.client.password){
+            clientFlag = false;                
+            break;
+        }
+    }
+    if (clientFlag){
+        clients.push(req.query.client);
+    }
+    res.send({ flag: clientFlag });  
+    res.end();
+});
+
 
 
 //function for delete 
