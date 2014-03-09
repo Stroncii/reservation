@@ -8,6 +8,7 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
+var jf = require('jsonfile');
 var reservations = new Array ();
 var clients = new Array();
 
@@ -37,7 +38,9 @@ if ('development' == app.get('env')) {
 
 // function for booking
 app.get('/booking', function(req, res){
-	// new booking 
+	// new booking
+  var reservations = jf.readFileSync(reservationsFile);
+
   res.header('Content-Length');
   console.log("Количество элементов " + reservations.length);
   var date = new Date (req.query.book.date);
@@ -49,18 +52,19 @@ app.get('/booking', function(req, res){
   // make new request                
  	if (( new Date(reservations[i].date) - date == 0 ) && ((+reservations[i].start >= +req.query.book.start && +reservations[i].start < +req.query.book.end) || (+reservations[i].end > +req.query.book.start && +reservations[i].end <= +req.query.book.end) || (+reservations[i].start >= +req.query.book.start && +reservations[i].end <= +req.query.book.end)))
  	{
-   		 flag = true;
-    	 break;
+   		flag = true;
+    	break;
  	}  
   }
   console.log ("Флаг на сервере равен " + flag);
-  // if everythin' is good we new reservation will be created
+  // if everythin' is good new reservation will be created
   if (!flag) {        
      reservations.push(req.query.book); 
      console.log("Количество элементов после проверки " + reservations.length);
    }
   res.send({ flag: flag, reservations: reservations });  
   res.end();
+  jf.writeFileSync(reservationsFile, reservations);
 });
 
 //function for check Clients
@@ -96,4 +100,11 @@ app.get('/delete', function(req, res){
 	res.send({ deleteFlag: deleteFlag, reservations: reservations});
 });
 
+//function for first drawing
+app.get('/getres', function(req, res){
+  var reservations = jf.readFileSync(reservationsFile);
+  res.header('Content-Length');
+  res.send({ reservations: reservations });  
+  res.end();
+});
 app.listen(3000);

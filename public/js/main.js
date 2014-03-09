@@ -51,11 +51,24 @@
     
 
 $(document).ready(function(){
+  $.ajax({
+    url:"/getres",
+    data: { book: Book },
+    method: 'GET',
+    success: function (data){
+      reservations = data.reservations;
+      updatetable();
+      updatePB ($("#datepicker").datepicker("getDate"));
+     } 
+  });   
 
 		$('#repeatin').hide();
 		$('#table').hide();
     currentDate = new Date($("#datepicker").datepicker("getDate"));
-		
+
+    // for email checking
+    var regExp = new RegExp("^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$");
+		// drawing progressbar
     $(".progress").append('<div class="progress-bar progress-bar-success" style="width: 100%"><span class="sr-only"></span></div>');
 
 
@@ -111,8 +124,8 @@ $(document).ready(function(){
                   data: { book: Book },
                   method: 'GET',
                   success: function (data){
-                      console.log("успех " + data.flag + " "  );
-                      if (!data.flag) {
+                    console.log("успех " + data.flag + " "  );
+                    if (!data.flag) {
                         reservations = data.reservations;
                         updatetable();
                         updatePB ($("#datepicker").datepicker("getDate"));
@@ -133,6 +146,13 @@ $(document).ready(function(){
 
          // Log in function
          $('#logButton').click(function() {
+
+          
+          if (!regExp.test($('#username').val()) && $('#username').val()) {
+            alert ('Введите ваш email');
+          }
+         
+
           if ($('#username').val() && $('#password').val()) {
             Client = new username( $('#username').val(), $('#password').val() );
             console.log(Client);
