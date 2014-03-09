@@ -69,7 +69,7 @@ app.get('/booking', function(req, res){
 
 //function for check Clients
 app.get('/check', function(req, res){
-	console.log ("мы тут");
+  var clients = jf.readFileSync(clientsFile);
 	res.header('Content-Length');
 	var i;
 	var clientFlag = true;
@@ -81,6 +81,7 @@ app.get('/check', function(req, res){
     }
     if (clientFlag){
         clients.push(req.query.client);
+        jf.writeFileSync(clientsFile, clients);
     }
     res.send({ flag: clientFlag });  
     res.end();
@@ -90,7 +91,7 @@ app.get('/check', function(req, res){
 
 //function for delete 
 app.get('/delete', function(req, res){
-	console.log ("запрос на удаление записи: " + req.query.index);
+  var reservations = jf.readFileSync(reservationsFile);
 	var deleteFlag = false;
 	if (req.query.name == reservations[+req.query.index].name){
 		reservations.splice(+req.query.index, 1);
@@ -98,6 +99,8 @@ app.get('/delete', function(req, res){
         deleteFlag = true;        
 	}
 	res.send({ deleteFlag: deleteFlag, reservations: reservations});
+  res.end();
+  jf.writeFileSync(reservationsFile, reservations);
 });
 
 //function for first drawing

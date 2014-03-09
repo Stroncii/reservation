@@ -43,11 +43,14 @@
           for (t; t<reservations.length; t++){
             console.log ("нынешняя дата " + $("#datepicker").datepicker("getDate") + "        дата существующей резервации " +  reservations[t].date );
             if( $("#datepicker").datepicker("getDate") - new Date(reservations[t].date) == 0 ){
-              $(".table > tbody").append('<tr class="warning"><td>'+t+'</td><td>'+reservations[t].start+'</td><td>'+reservations[t].end+'</td><td><button type="button" class="btn btn-small btn-primary" onclick="deleteTag(' + t + ')">Удалить</button></td></tr>' );
+              if (reservations[t].name == Client.name){
+                $(".table > tbody").append('<tr class="warning"><td>'+t+'</td><td>'+reservations[t].start+'</td><td>'+reservations[t].end+'</td><td><button type="button" class="btn btn-small btn-primary" onclick="deleteTag(' + t + ')">Удалить</button></td></tr>' );
             } else {
+                $(".table > tbody").append('<tr class="warning"><td>'+t+'</td><td>'+reservations[t].start+'</td><td>'+reservations[t].end+'</td><td></td></tr>' );
             }
           }
       }
+  };
     
 
 $(document).ready(function(){
@@ -57,7 +60,6 @@ $(document).ready(function(){
     method: 'GET',
     success: function (data){
       reservations = data.reservations;
-      updatetable();
       updatePB ($("#datepicker").datepicker("getDate"));
      } 
   });   
@@ -88,9 +90,10 @@ $(document).ready(function(){
           currentDate = new Date($("#datepicker").datepicker("getDate"));
           console.log (" Дата сменилась сама:   " + currentDate);
         //  currentDate.setDate(currentDate.getDate() + 2);
-          
-          updatetable();
-          updatePB (new Date(currentDate));
+          if (Client){
+            updatetable();
+          }
+          updatePB($("#datepicker").datepicker("getDate"));
 
        	 });
 
@@ -148,9 +151,9 @@ $(document).ready(function(){
          $('#logButton').click(function() {
 
           
-          if (!regExp.test($('#username').val()) && $('#username').val()) {
+     /*     if (!regExp.test($('#username').val()) && $('#username').val()) {
             alert ('Введите ваш email');
-          }
+          }*/
          
 
           if ($('#username').val() && $('#password').val()) {
@@ -169,6 +172,7 @@ $(document).ready(function(){
                       alert ("Здравствуйте, " + Client.name); 
                       console.log (Client);
                       $('#table').show();
+                      updatetable();
                     }
                  }
               });
