@@ -67,16 +67,56 @@ $(document).ready(function(){
 
 		$('#repeatin').hide();
 		$('#table').hide();
+    $('#registration').hide();
     currentDate = new Date($("#datepicker").datepicker("getDate"));
 
     // for email checking
-    var regExp = new RegExp("^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$");
+    var regExp = new RegExp("^[-._a-zA-Z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$");
 		// drawing progressbar
     $(".progress").append('<div class="progress-bar progress-bar-success" style="width: 100%"><span class="sr-only"></span></div>');
 
+    $('#cancel').click(function() {
+      $('#registration').hide("slow");
+    });
+    $('#callReg').click( function(event){
+      event.preventDefault();
+      $('#registration').show("slow");
+    });
+    // registration
+    $('#regButton').click(function(){
+      var email = $('#email').val();
+      var pass = $('#regpassword').val();
+      if (email && pass) {
+        if (!regExp.test(email)) {
+            alert ('Введите email');
+        } else { //email is checked
+          var newUser = new username (email, pass);
+          $.ajax({
+                  url:"/registration",
+                  data: { user: newUser },
+                  method: 'GET',
+                  success: function (data){
+                    console.log("успех в регистрации" + data.flag + " "  );
+                    if (data.flag) {
+                        alert ('Вы успешно зарегистрировались. Войдите, чтобы продолжить работу');
+                        $('#registration').hide("slow");
+                        $('#email').val('');
+                        $('#regpassword').val('');
+                       } else {
+                        alert ('Такой пользователь уже существует');
+                       }
+                 }
+                }); // end of request  
+        }
+      } else { // fields are empty
+        alert ("Введите данные");
+      }
+    });
 
 
 
+
+    // click on checkbox
 		$('#checkBox').click(function() {
        	 if (!$(this).is(':checked')) {
           	  $('#repeatin').hide(); 
@@ -153,39 +193,44 @@ $(document).ready(function(){
             var user = $('#username').val();
             var password = $('#password').val();
           if (logIn == true) { // if that's logIn
-     /*     if (!regExp.test($('#username').val()) && $('#username').val()) {
-            alert ('Введите ваш email');
-          }*/
-         
-
-          if ( user && password ) {
-            Client = new username( user, password );
-              $.ajax({
-                url:'/check',
-                data: { client: Client },
-                method: 'GET',
-                success: function (data){
-                  console.log("успех " + data.flag + " "  );
-                  if (!data.flag) {
-                    alert ("Пользователь с подобными данными не обнаружен. Зарегистрируйтесь или введите правильный логин и пароль.");
-                    Client = null;
-                    } else {
-                      logIn = false;
-                      alert ("Здравствуйте, " + Client.name); 
-                      $('#logButton').text('Выйти');
-                      $('#table').show();
-                      updatetable();
-                      $('#fields').hide();
-                    }
-                 }
-              });
-          } else {
-            alert ('Введите Ваши данные');
-          };
+            console.log("Является ли первая часть emailom? " + regExp.test(user) + " у пользователя " + user);
+            if (!regExp.test(user)) {
+              alert ('Введите ваш email');
+            } else {
+            if ( user && password ) {
+              Client = new username( user, password );
+                $.ajax({
+                  url:'/check',
+                  data: { client: Client },
+                  method: 'GET',
+                  success: function (data){
+                    console.log("успех " + data.flag + " "  );
+                    if (!data.flag) {
+                      alert ("Пользователь с подобными данными не обнаружен. Зарегистрируйтесь или введите правильне данные.");
+                      Client = null;
+                      } else {
+                        logIn = false;
+                        alert ("Здравствуйте, " + Client.name); 
+                        $('#logButton').text('Выйти');
+                        $('#table').show();
+                        updatetable();
+                        $('#fields').hide("slow");
+                      }
+                   }
+                });
+            } else {
+              alert ('Введите Ваши данные');
+            };
+          }
         } else { // if it's log out
           logIn = true;
+          updatetable();
+          $('#table').hide();
           $('#logButton').text('Войти');
-          $('#fields').show();
+          $('#fields').show("slow");
+          $('#username').val('');
+          $('#password').val('');
+          Client = null;
         }
         }); 
 });

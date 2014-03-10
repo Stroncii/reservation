@@ -72,20 +72,37 @@ app.get('/check', function(req, res){
   var clients = jf.readFileSync(clientsFile);
 	res.header('Content-Length');
 	var i;
-	var clientFlag = true;
+	var clientFlag = false;
     for (i=0; i< clients.length; i++) {
-        if (clients[i].name == req.query.client.name && clients[i].password != req.query.client.password){
-            clientFlag = false;                
+        if (clients[i].name == req.query.client.name && clients[i].password == req.query.client.password){
+            clientFlag = true;                
             break;
         }
-    }
-    if (clientFlag){
-        clients.push(req.query.client);
-        jf.writeFileSync(clientsFile, clients);
     }
     res.send({ flag: clientFlag });  
     res.end();
 });
+
+//function for registration
+app.get('/registration', function(req, res){
+  var clients = jf.readFileSync(clientsFile);
+  res.header('Content-Length');
+  var i;
+  var regFlag = true;
+    for (i=0; i< clients.length; i++) {
+        if (clients[i].name == req.query.user.name){
+            regFlag = false;                
+            break;
+        }
+    }
+    if (regFlag){
+        clients.push(req.query.user);
+        jf.writeFileSync(clientsFile, clients);
+    }
+    res.send({ flag: regFlag });  
+    res.end();
+});
+
 
 
 

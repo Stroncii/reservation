@@ -73,7 +73,7 @@
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
       
-          <a class="navbar-brand" href="#">Регистрация</a>
+          <a class="navbar-brand" id="callReg">Регистрация</a>
         </div>
     </div>
 
@@ -187,9 +187,35 @@
             </div>
 
 
+    <!-- registration form -->
+    <div id="registration">
+        <fieldset>
+              <form class="form-inline">
+                <form class="form-horizontal pull-middle">
+                 <label class="control-label" for="input01">Email</label>
+                  <div class="controls">
+                    <input onsubmit="return false;" type="text" class="input-xlarge" id="email">
+                    <p class="help-block">Введите Ваш email</p>
+                  </div>
+                </form>
+                <form class="form-horizontal">
+                <label class="control-label" for="input01">Пароль</label>
+                <div class="controls">
+                  <input type="password" onsubmit="return false;" class="input-xlarge" id="regpassword">
+                  <p class="help-block">Введите Ваш пароль.</p>
+                </div>
+                </form>        
+          </form>       
+            </fieldset>
+             <button type="button" class="btn" id="regButton">Зарегистрироваться</button>
+             <button type="button" class="btn" id="cancel">Выйти</button>
+    </div>
+
 
 
     </div><!-- /.container -->
+
+     
 
 
     <!-- Bootstrap core JavaScript
