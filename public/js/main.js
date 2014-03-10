@@ -2,6 +2,7 @@
     var Book;
     var progressBar = {};
     var currentDate;
+    var logIn = true; // true - for log, false for exit;
 
     function deleteTag (index) {
       $.ajax({
@@ -149,16 +150,16 @@ $(document).ready(function(){
 
          // Log in function
          $('#logButton').click(function() {
-
-          
+            var user = $('#username').val();
+            var password = $('#password').val();
+          if (logIn == true) { // if that's logIn
      /*     if (!regExp.test($('#username').val()) && $('#username').val()) {
             alert ('Введите ваш email');
           }*/
          
 
-          if ($('#username').val() && $('#password').val()) {
-            Client = new username( $('#username').val(), $('#password').val() );
-            console.log(Client);
+          if ( user && password ) {
+            Client = new username( user, password );
               $.ajax({
                 url:'/check',
                 data: { client: Client },
@@ -166,21 +167,26 @@ $(document).ready(function(){
                 success: function (data){
                   console.log("успех " + data.flag + " "  );
                   if (!data.flag) {
-                    alert ("Введите правильный логин и пароль.");
+                    alert ("Пользователь с подобными данными не обнаружен. Зарегистрируйтесь или введите правильный логин и пароль.");
                     Client = null;
                     } else {
+                      logIn = false;
                       alert ("Здравствуйте, " + Client.name); 
-                      console.log (Client);
+                      $('#logButton').text('Выйти');
                       $('#table').show();
                       updatetable();
+                      $('#fields').hide();
                     }
                  }
               });
           } else {
-            alert ('Введите логин и пароль');
+            alert ('Введите Ваши данные');
           };
-       
-
+        } else { // if it's log out
+          logIn = true;
+          $('#logButton').text('Войти');
+          $('#fields').show();
+        }
         }); 
 });
 

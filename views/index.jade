@@ -40,17 +40,17 @@ html(lang='en')
             form.form-horizontal.pull-middle
               fieldset
                 form.form-inline
-                  form.form-horizontal.pull-middle
-                    label.control-label(for='input01') &Icy;&mcy;&yacy;
+                  form#fields.form-horizontal.pull-middle
                     .controls
-                      input#username.input-xlarge(type='text', onsubmit='return false;')
+                      label.control-label(for='input01') &Icy;&mcy;&yacy;
+                      input#username.input-xlarge(type='text', onsubmit='return false;' name='username')
                       p.help-block &Vcy;&vcy;&iecy;&dcy;&icy;&tcy;&iecy; &Vcy;&acy;&shcy;&iecy; &icy;&mcy;&yacy;&period;
                   form.form-horizontal
-                    label.control-label(for='input01') &Pcy;&acy;&rcy;&ocy;&lcy;&softcy;
                     .controls
-                      input#password.input-xlarge(type='password', onsubmit='return false;')
+                      label.control-label(for='input01') &Pcy;&acy;&rcy;&ocy;&lcy;&softcy;
+                      input#password.input-xlarge(type='password', onsubmit='return false;' name="password")
                       p.help-block &Vcy;&vcy;&iecy;&dcy;&icy;&tcy;&iecy; &Vcy;&acy;&shcy; &pcy;&acy;&rcy;&ocy;&lcy;&softcy;&period;
-                  button#logButton.btn(type='button') &Vcy;&ocy;&jcy;&tcy;&icy;
+              button#logButton.btn(type='button') &Vcy;&ocy;&jcy;&tcy;&icy;
               fieldset
                 .control-group
                   label.control-label(for='input01') &Vcy;&rcy;&iecy;&mcy;&yacy;
