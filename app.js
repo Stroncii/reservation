@@ -39,41 +39,39 @@ if ('development' == app.get('env')) {
 // function for booking
 app.get('/booking', function(req, res){
 	// new booking
-  var reservations = jf.readFileSync(reservationsFile);
+  	var reservations = jf.readFileSync(reservationsFile);
 
-  res.header('Content-Length');
-  console.log("Количество элементов " + reservations.length);
-  var date = new Date (req.query.book.date);
-  console.log(date);
-  var i = 0;
-  flag = false;
-  for (i; i < reservations.length; i++){
-  	console.log( "Разница дат на шаге номер " + i + " " + (new Date(reservations[i].date) - date ));
-  // make new request                
- 	if (( new Date(reservations[i].date) - date == 0 ) && ((+reservations[i].start >= +req.query.book.start && +reservations[i].start < +req.query.book.end) || (+reservations[i].end > +req.query.book.start && +reservations[i].end <= +req.query.book.end) || (+reservations[i].start >= +req.query.book.start && +reservations[i].end <= +req.query.book.end)))
- 	{
-   		flag = true;
-    	break;
- 	}  
-  }
-  console.log ("Флаг на сервере равен " + flag);
-  // if everythin' is good new reservation will be created
-  if (!flag) {        
-     reservations.push(req.query.book); 
-     console.log("Количество элементов после проверки " + reservations.length);
-   }
-  res.send({ flag: flag, reservations: reservations });  
-  res.end();
-  jf.writeFileSync(reservationsFile, reservations);
+  	res.header('Content-Length');
+  	var date = new Date (req.query.book.date);
+  	var i = 0;
+  	flag = false;
+  	for (i; i < reservations.length; i++){
+  	// если текущая бронь совпадает с пришедшей по дате и пересекается с ней по времени - поднять флаг.               
+ 		if (( new Date(reservations[i].date) - date == 0 ) && ((+reservations[i].start >= +req.query.book.start && +reservations[i].start < +req.query.book.end) || (+reservations[i].end > +req.query.book.start && +reservations[i].end <= +req.query.book.end) || (+reservations[i].start >= +req.query.book.start && +reservations[i].end <= +req.query.book.end)))
+ 		{
+   			flag = true;
+    		break;
+ 		}  
+  	}
+  	console.log ("Флаг на сервере равен " + flag);
+  	// if everythin' is good new reservation will be created
+  	if (!flag) {        
+    	reservations.push(req.query.book); 
+     	console.log("Количество элементов после проверки " + reservations.length);
+   	}
+  	res.send({ flag: flag, reservations: reservations });  
+  	res.end();
+  	jf.writeFileSync(reservationsFile, reservations);
 });
 
 //function for check Clients
 app.get('/check', function(req, res){
-  var clients = jf.readFileSync(clientsFile);
+  	var clients = jf.readFileSync(clientsFile);
 	res.header('Content-Length');
 	var i;
 	var clientFlag = false;
     for (i=0; i< clients.length; i++) {
+    	//проход по списку зарегистрированных клиентов. Если емейл и пароль совпадают - всё хорошо
         if (clients[i].name == req.query.client.name && clients[i].password == req.query.client.password){
             clientFlag = true;                
             break;
@@ -85,17 +83,17 @@ app.get('/check', function(req, res){
 
 //function for registration
 app.get('/registration', function(req, res){
-  var clients = jf.readFileSync(clientsFile);
-  res.header('Content-Length');
-  var i;
-  var regFlag = true;
+  	var clients = jf.readFileSync(clientsFile);
+  	res.header('Content-Length');
+  	var i;
+  	var regFlag = true;
     for (i=0; i< clients.length; i++) {
-        if (clients[i].name == req.query.user.name){
+        if (clients[i].name == req.query.user.name){ //если такой пользователь уже имеется в базе
             regFlag = false;                
             break;
         }
     }
-    if (regFlag){
+    if (regFlag){ // если нет - пдобавляем нового пользователя.
         clients.push(req.query.user);
         jf.writeFileSync(clientsFile, clients);
     }
@@ -108,23 +106,25 @@ app.get('/registration', function(req, res){
 
 //function for delete 
 app.get('/delete', function(req, res){
-  var reservations = jf.readFileSync(reservationsFile);
+  	var reservations = jf.readFileSync(reservationsFile);
 	var deleteFlag = false;
+	//если удалящий является создателем - удаляем заказ
 	if (req.query.name == reservations[+req.query.index].name){
 		reservations.splice(+req.query.index, 1);
         console.log(reservations.length);
         deleteFlag = true;        
 	}
 	res.send({ deleteFlag: deleteFlag, reservations: reservations});
-  res.end();
-  jf.writeFileSync(reservationsFile, reservations);
+  	res.end();
+  	jf.writeFileSync(reservationsFile, reservations);
 });
 
-//function for first drawing
+//Функция передаёт заказы из базы для начальной отрисовки интерфейса
 app.get('/getres', function(req, res){
-  var reservations = jf.readFileSync(reservationsFile);
-  res.header('Content-Length');
-  res.send({ reservations: reservations });  
-  res.end();
+ 	var reservations = jf.readFileSync(reservationsFile);
+  	res.header('Content-Length');
+  	res.send({ reservations: reservations });  
+  	res.end();
 });
+
 app.listen(3000);
